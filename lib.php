@@ -32,8 +32,7 @@ require_once($CFG->dirroot . '/theme/digitalta/locallib.php');
  * @param theme_config $theme The theme config object.
  * @return string
  */
-function theme_digitalta_get_pre_scss($theme)
-{
+function theme_digitalta_get_pre_scss($theme) {
     global $CFG;
     $pre = "";
     $pre .= theme_boost_get_pre_scss(theme_config::load('boost'));
@@ -48,8 +47,7 @@ function theme_digitalta_get_pre_scss($theme)
  * @param theme_config $theme The theme config object.
  * @return string
  */
-function theme_digitalta_get_extra_scss($theme)
-{
+function theme_digitalta_get_extra_scss($theme) {
     global $CFG;
     $post = "";
     $post .= theme_boost_get_extra_scss(theme_config::load('boost'));
@@ -67,12 +65,10 @@ function theme_digitalta_page_init(moodle_page $page)
 {
     redirect_login_is_not_loggedin();
     redirect_is_not_allowed_page();
-    if (
-        get_config('theme_digitalta', 'survey_link_enabled')
-        && ($survey_link = get_config('theme_digitalta', 'survey_link_url'))
-        && !isguestuser()
-        && isloggedin()
-    ) {
+    if (get_config('theme_digitalta', 'survey_link_enabled')
+            && ($survey_link = get_config('theme_digitalta', 'survey_link_url'))
+            && !isguestuser()
+            && isloggedin()) {
         $page->requires->js_call_amd("theme_digitalta/survey", "init", [$survey_link]);
     }
 }
@@ -203,7 +199,7 @@ function get_sections_details()
             'link' => THEME_DIGITALTA_NAVBAR_TUTORSMENTORS,
         ],
         'chat' => [
-            'label' => get_chat_label(),
+            'label' => get_string('navbar:chat', 'theme_digitalta'), 
             'icon' => 't/messages',
             'node_key' => 'chat',
             'link' => THEME_DIGITALTA_NAVBAR_CHAT
@@ -273,22 +269,4 @@ function redirect_is_not_allowed_page()
         }
     }
     redirect($redirect_url);
-}
-
-function get_chat_label()
-{
-
-    if (isloggedin() && !isguestuser()) {
-        $unreadcount = \local_digitalta\chat::get_unread_chatrooms();
-    } else {
-        $unreadcount = 0;
-    }
-
-    $chatlabel = get_string('navbar:chat', 'theme_digitalta');
-
-    if ($unreadcount > 0) {
-        $chatlabel .= ' <span class="badge badge-danger ml-1">' . $unreadcount . '</span>';
-    }
-
-    return $chatlabel;
 }

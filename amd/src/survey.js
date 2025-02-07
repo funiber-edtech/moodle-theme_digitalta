@@ -29,9 +29,7 @@ const SELECTORS = {
 
 export const init = (survey_link) => {
     const surveyToast = document.querySelector(SELECTORS.SURVEYTOAST);
-    const surveyContainer = document.querySelector("#digitalta-toasts");
     if (surveyToast) {
-        surveyContainer.style.zIndex = 3;
         surveyToast.addEventListener("click", () => {
             window.open(survey_link, "_blank");
         });
